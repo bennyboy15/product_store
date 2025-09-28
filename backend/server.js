@@ -12,10 +12,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 app.use(express.json()); // Allows us to accept JSON in request body
 
-// Deployment
+// --------- Deployment -------
 const __dirname = path.resolve();
-
-app.use("/api/products", productRoutes)
 
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "/frontend/dist")));
@@ -24,6 +22,9 @@ if (process.env.NODE_ENV === "production") {
         res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"))
     })
 }
+// ---------------------------
+
+app.use("/api/products", productRoutes)
 
 app.listen(PORT, () => {
     connectDB();
